@@ -41,8 +41,10 @@ nmap <leader>T :enew<CR>
 nmap <leader>l :bn<CR>
 " Move to the previous buffer
 nmap <leader>h :bp<CR>
-" Close the current buffer
+" Close the current buffer and save
 nmap <leader>bq :w <BAR> bd<CR>
+" Close the current buffer without saving
+nmap <leader>qq :bd<CR>
 
 " Toggle relativenumber on/off
 nmap <leader>tn :set relativenumber!<CR>
