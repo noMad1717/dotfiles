@@ -15,6 +15,8 @@ Plugin 'wincent/command-t'
 " Status/tabline for Vim
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+" NERD tree - file system explorer for vim
+Plugin 'scrooloose/nerdtree'
 
 call vundle#end()		"required
 filetype plugin indent on	"required
@@ -50,6 +52,9 @@ nmap <leader>qq :bd<CR>
 nmap <leader>tn :set relativenumber!<CR>
 " Toggle hlsearch on/off
 nmap <leader>hl :set hlsearch!<CR>
+
+" Toggle NERD tree
+nmap <leader>nt :NERDTreeToggle<CR>
 
 set hidden          " Ignore unsaved buffers
 
