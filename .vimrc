@@ -18,6 +18,7 @@ Plugin 'vim-airline/vim-airline-themes'
 " NERD tree - file system explorer for vim
 Plugin 'scrooloose/nerdtree'
 Plugin 'Badacadabra/vim-archery'
+Plugin 'arcticicestudio/nord-vim'
 
 call vundle#end()		"required
 filetype plugin indent on	"required
@@ -34,6 +35,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 " Set the default theme for airline
 let g:airline_theme = 'archery'
+" Enable Powerline symbols for airline
+let g:airline_powerline_fonts = 1
 
 " Map ',' as <leader>
 let mapleader = ','
@@ -77,7 +80,8 @@ set hlsearch        " Highlight matches
 set incsearch       " Use incremental search
 set ignorecase      " Search is not case-sensitive
 
-colorscheme archery
+" colorscheme archery
+colorscheme nord
 
 set tabstop=4		" Show existing tab as 4 spaces
 set shiftwidth=4	" Indenting with '>' equals to 4 spaces
