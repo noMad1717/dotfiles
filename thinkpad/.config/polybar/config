@@ -1,0 +1,310 @@
+; ########################################
+; # general settings
+; ########################################
+
+[colors]
+    black = #25272c
+    grey = #53586f
+    aqua = #81a3cf
+    background = #354151
+    blue = #0088cc
+    foreground = #f6f9fc
+    foreground-alt = #90665c54
+    green = #008542
+    orange = #f07d30
+    purple = #8d4888
+    red = #ba2a2a
+    white = #f6f9fc
+    yellow = #eac06e
+    nord-polar-night1 = #2e3440
+    nord-polar-night2 = #3b4252
+    nord-polar-night3 = #434c5e
+    nord-polar-night4 = #4c566a
+    nord-snow-storm1 = #d8dee9
+    nord-snow-storm2 = #e5e9f0
+    nord-snow-storm3 = #eceff4
+    nord-frost1 = #8fbcbb
+    nord-frost2 = #88c0d0
+    nord-frost3 = #81a1c1
+    nord-frost4 = #5e81ac
+    nord-aurora1 = #bf616a
+    nord-aurora2 = #d08770
+    nord-aurora3 = #ebcb8b
+    nord-aurora4 = #a3be8c
+    nord-aurora5 = #b48ead
+
+[global/wm]
+    margin-bottom = 4
+
+[settings]
+    screenchange-reload = true
+
+
+; ########################################
+; # bar definitions
+; ########################################
+
+[bar/default]
+    height = 25
+    width = 100%
+    fixed-center = true
+
+    background = ${colors.nord-polar-night1}
+    foreground = ${colors.nord-snow-storm1}
+
+    padding = 1
+
+    module-margin-left = 1
+    module-margin-right = 1
+
+    font-0 = FiraCode Nerd Font:size=11;1
+    ;font-0 = Monoid Nerd Font Mono:size=11;1
+    font-1 = Source Sans Pro:weight=semibold:pixelsize=12;3
+    font-2 = FontAwesome5Free:style=Solid:size=11;1
+    font-3 = "Font Awesome 5 Brands"
+    font-4 = IPAGothic:pixelsize=15;3
+    font-5 = PowerlineSymbols
+
+    click-middle = polybar-msg cmd restart
+    enable-ipc = true
+
+[bar/top]
+    inherit = bar/default
+    modules-left = shutdown_menu
+    modules-center = i3
+    modules-right = xkeyboard wifi_sarang pulseaudio bat_sarang date
+    line-size = 2
+
+; ########################################
+; # module settings
+; ########################################
+
+[module/shutdown_menu]
+    type = custom/script
+    exec = echo ''
+
+    format = <label>
+    format-padding = 1
+    format-foreground = ${colors.nord-aurora1}
+    label = %{A1:~/packages/i3blocks-contrib/shutdown_menu/shutdown_menu:} %output% %{A}
+
+[module/xkeyboard]
+    type = internal/xkeyboard
+    
+    format = <label-layout>
+    label-layout =  %icon%
+    label-layout-padding = 1
+    label-layout-foreground = ${colors.nord-aurora5}
+
+    layout-icon-0 = gb;GB
+    layout-icon-1 = se;SE
+
+[module/battery]
+    type = internal/battery
+    poll-interval = 30
+
+    format-full = <label-full>
+    format-full-foreground = ${colors.nord-aurora4}
+    label-full = " %percentage%%"
+
+    format-charging = <label-charging>
+    format-charging-foreground = ${colors.nord-aurora3}
+    label-charging = " %percentage%%"
+
+    format-discharging = <ramp-capacity> <label-discharging>
+    label-discharging = %percentage%%(%time%)
+    time-format = %H:%M
+
+    ramp-capacity-0 = 
+    ramp-capacity-0-foreground = ${colors.nord-aurora1}
+    ramp-capacity-1 = 
+    ramp-capacity-1-foreground = ${colors.nord-aurora2}
+    ramp-capacity-2 = 
+    ramp-capacity-2-foreground = ${colors.nord-aurora3}
+    ramp-capacity-3 = 
+    ramp-capacity-3-foreground = ${colors.nord-aurora4}
+    ramp-capacity-4 = 
+    ramp-capacity-4-foreground = ${colors.nord-aurora4}
+
+[module/bat_sarang]
+    inherit = module/battery
+    battery = BAT0
+    adapter = AC0
+    full-at = 90
+
+[module/date]
+    type = internal/date
+    interval = 5
+    format-foreground = ${colors.nord-snow-storm1}
+    format-background = ${colors.nord-polar-night1}
+    format-padding = 2
+    label = %time%
+    time = %k:%M
+    time-alt =  "%A, %B %e"
+
+[module/memory]
+    type = internal/memory
+    format = <ramp-used>
+    interval = 2
+    label = %percentage_used%
+
+    ramp-used-0 = 
+    ramp-used-0-foreground = ${colors.green}
+    ramp-used-1 = 
+    ramp-used-1-foreground = ${colors.green}
+    ramp-used-2 = 
+    ramp-used-2-foreground = ${colors.green}
+    ramp-used-3 = 
+    ramp-used-3-foreground = ${colors.yellow}
+    ramp-used-4 = 
+    ramp-used-4-foreground = ${colors.red}
+
+[module/mpd]
+    type = internal/mpd
+    host = 127.0.0.1
+    port = 6600
+    interval = 1
+    click-left = xdotool set_desktop 10
+    format-online = <label-song>
+    format-offline = "mpd offline"
+
+    format-offline-prefix = ""
+    format-offline-prefix-foreground = ${colors.red}
+    format-offline-prefix-padding = 2
+
+    format-paused-prefix = ""
+    format-paused-prefix-foreground = ${colors.yellow}
+    format-paused-prefix-padding = 2
+
+    format-playing-prefix = ""
+    format-playing-prefix-foreground = ${colors.green}
+    format-playing-prefix-padding = 2
+
+    format-stopped-prefix = ""
+    format-stopped-prefix-foreground = ${colors.red}
+    format-stopped-prefix-padding = 2
+
+[module/temperature]
+    interval = 2
+    type = internal/temperature
+
+    format = <ramp>
+
+    format-warn = <ramp> <label-warn>
+    label-warn = %temperature-c%
+    label-warn-foreground = ${colors.red}
+
+    ramp-0 = 
+    ramp-0-foreground = ${colors.green}
+    ramp-1 = 
+    ramp-1-foreground = ${colors.green}
+    ramp-2 = 
+    ramp-2-foreground = ${colors.green}
+    ramp-3 = 
+    ramp-3-foreground = ${colors.green}
+    ramp-4 = 
+    ramp-4-foreground = ${colors.green}
+    ramp-5 = 
+    ramp-5-foreground = ${colors.green}
+    ramp-6 = 
+    ramp-6-foreground = ${colors.yellow}
+    ramp-7 = 
+    ramp-7-foreground = ${colors.red}
+
+[module/temp_kodama]
+    inherit = module/temperature
+    thermal-zone = 1
+    warn-temperature = 75
+
+[module/temp_sarang]
+    inherit = module/temperature
+    thermal-zone = 3
+    warn-temperature = 75
+
+[module/pulseaudio]
+    type = internal/pulseaudio
+    
+    format-volume = <label-volume>
+    label-volume = " %percentage%%"
+    format-volume-prefix = 
+    label-volume-foreground = ${colors.nord-snow-storm3}
+    format-volume-prefix-foreground = ${colors.nord-aurora4}
+
+    format-muted = <label-muted>
+    label-muted = 
+    label-muted-foreground = ${colors.nord-aurora1}
+
+[module/wifi]
+    type = internal/network
+    interval = 6
+    ping-interval = 6
+
+    format-connected = <ramp-signal> <label-connected>
+    format-packetloss = <animation-packetloss> <label-connected>
+    label-connected = %essid%
+
+    ramp-signal-0 = 
+    ramp-signal-0-foreground = ${colors.nord-aurora2}
+    ramp-signal-1 = 
+    ramp-signal-1-foreground = ${colors.nord-aurora3}
+    ramp-signal-2 = 
+    ramp-signal-2-foreground = ${colors.nord-aurora4}
+    label-connected-foreground = ${colors.nord-snow-storm3}
+
+    animation-packetloss-0 = 
+    animation-packetloss-0-foreground = ${colors.yellow}
+    animation-packetloss-1 = 
+    animation-packetloss-1-foreground = ${colors.background}
+    animation-packetloss-framerate = 1000
+
+[module/i3]
+    type = internal/i3
+    format = <label-state> <label-mode>
+    index-sort = true
+    wrapping-scroll = false
+
+    ws-icon-0 = 1;
+    ws-icon-1 = 2;
+    ws-icon-2 = 3;
+
+    ws-icon-default = 
+
+    label-mode-padding = 2
+    label-mode-foreground = ${colors.white}
+    label-mode-background = ${colors.grey}
+
+    label-focused = %icon%
+    label-focused-foreground = ${colors.nord-aurora4}
+    label-focused-padding = 2
+
+    label-unfocused = %icon%
+    label-unfocused-padding = ${self.label-focused-padding}
+
+    label-visible = %icon%
+    label-visible-padding = ${self.label-focused-padding}
+
+    label-urgent = %icon%!
+    label-urgent-background = ${colors.red}
+    label-urgent-padding = ${self.label-focused-padding}
+
+[module/wifi_sarang]
+    inherit = module/wifi
+    interface = wlp4s0
+
+[module/xbacklight]
+    type = internal/xbacklight
+
+    format = <ramp> <label>
+    label = %percentage%
+
+    ramp-0 = 
+    ramp-0-foreground = ${colors.red}
+    ramp-1 = 
+    ramp-1-foreground = ${colors.yellow}
+    ramp-2 = 
+    ramp-2-foreground = ${colors.yellow}
+    ramp-3 = 
+    ramp-3-foreground = ${colors.green}
+
+[module/xwindow]
+    type = internal/xwindow
